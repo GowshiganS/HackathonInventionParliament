@@ -1,4 +1,5 @@
 # 🏛️ The Invention Parliament and the AMCP protocol
+Wilfred Doré and Gowshigan Selladurai
 
 ## **10 AI Agents Invent Patents in 1 Hour via Async Protocol**
 
