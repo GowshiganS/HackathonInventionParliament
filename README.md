@@ -117,7 +117,6 @@ Patent attorney searches 120k prior art patents, identifies novel elements, gene
 ### 👥 **Team**
 
 **Wilfred Doré**
-Staff Engineer
 *Thesis: Turn-based AI is dead. Future is parallel, autonomous intelligence.*
 Role: AMCP protocol design, agent architecture
 
