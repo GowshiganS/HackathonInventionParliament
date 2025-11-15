@@ -1,0 +1,403 @@
+{
+  "name": "Deeptech Patent Innovation Discovery and Market Analysis",
+  "nodes": [
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "9d26582f-fdbb-4fd8-8422-ff107912728c",
+      "name": "Chat Trigger",
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.4,
+      "position": [
+        1056,
+        1200
+      ],
+      "webhookId": "9e649cf4-411e-4b81-a221-14382120fe7b"
+    },
+    {
+      "parameters": {},
+      "id": "a5ba553b-6c4e-432a-af3a-5d05943d3137",
+      "name": "Conversation Memory",
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        1408,
+        1424
+      ]
+    },
+    {
+      "parameters": {
+        "options": {
+          "systemMessage": "You are an orchestrator coordinating specialized AI agents to help deeptech startup founders discover and analyze patent innovation opportunities.\n\nYour task is to:\n1. Call the Research Agent Tool to search for state-of-the-art research papers and patents related to the user's invention idea\n2. Call the Patent Idea Generator Tool to generate candidate patent ideas based on the research findings\n3. Call the Market Analysis Tool to evaluate the market potential of the generated patent ideas\n4. Call the Report Writer Tool to draft a comprehensive final report\n5. Return ONLY the final report to the user\n\nCoordinate these agents in sequence and ensure each agent receives the necessary context from previous steps."
+        }
+      },
+      "id": "93c3b353-77b9-44f5-a3f8-16384b99883a",
+      "name": "Orchestrator Agent",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3,
+      "position": [
+        1688,
+        1200
+      ]
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "4651fda0-717f-4faf-a523-d7095c04c88f",
+      "name": "Mistral Chat Model - Orchestrator",
+      "type": "@n8n/n8n-nodes-langchain.lmChatMistralCloud",
+      "typeVersion": 1,
+      "position": [
+        1280,
+        1424
+      ],
+      "credentials": {
+        "mistralCloudApi": {
+          "id": "2IK8vAKC6lOfBZgj",
+          "name": "Mistral Cloud account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "toolDescription": "Searches for state-of-the-art research papers and patents related to the invention idea using Google Search and Perplexity",
+        "text": "={{ $fromAI(\"invention_idea\", \"The incomplete invention idea to research\", \"string\") }}",
+        "options": {
+          "systemMessage": "You are a research specialist focused on finding state-of-the-art research papers and patents.\n\nYour task is to:\n1. Use Google Search Tool to find relevant research papers and patents\n2. Extract and summarize key findings, methodologies, and innovations\n3. Return a comprehensive research summary with sources\n\nFocus on recent developments, key patents, and breakthrough research in the field."
+        }
+      },
+      "id": "99e06dd8-44ab-44de-80e8-e63642b56fbc",
+      "name": "Research Agent Tool",
+      "type": "@n8n/n8n-nodes-langchain.agentTool",
+      "typeVersion": 2.2,
+      "position": [
+        1536,
+        1424
+      ]
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "5fb97c96-e6f6-432d-9f8b-3a39aa330589",
+      "name": "Mistral Chat Model - Research",
+      "type": "@n8n/n8n-nodes-langchain.lmChatMistralCloud",
+      "typeVersion": 1,
+      "position": [
+        1552,
+        1632
+      ],
+      "credentials": {
+        "mistralCloudApi": {
+          "id": "2IK8vAKC6lOfBZgj",
+          "name": "Mistral Cloud account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "a80f65f1-3313-4e7a-b598-7d8a931c4791",
+      "name": "Google Search Tool",
+      "type": "@n8n/n8n-nodes-langchain.toolSerpApi",
+      "typeVersion": 1,
+      "position": [
+        1696,
+        1632
+      ],
+      "credentials": {
+        "serpApi": {
+          "id": "cWV2idH001RIvEZl",
+          "name": "SerpAPI account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "toolDescription": "Generates candidate patent ideas based on research findings using Mistral AI",
+        "text": "={{ $fromAI(\"research_findings\", \"The research findings from the Research Agent\", \"string\") }}",
+        "options": {
+          "systemMessage": "You are a patent innovation specialist who generates novel patent ideas based on research findings.\n\nYour task is to:\n1. Analyze the provided research findings\n2. Identify gaps, opportunities, and potential innovations\n3. Generate 3-5 candidate patent ideas that are:\n   - Novel and non-obvious\n   - Technically feasible\n   - Building on or improving existing research\n4. For each idea, provide:\n   - Title\n   - Brief description\n   - Key innovation points\n   - Potential applications\n\nReturn the patent ideas in a structured format."
+        }
+      },
+      "id": "21bc908e-55fa-4f0c-845f-0371afe0cfe8",
+      "name": "Patent Idea Generator Tool",
+      "type": "@n8n/n8n-nodes-langchain.agentTool",
+      "typeVersion": 2.2,
+      "position": [
+        1824,
+        1424
+      ]
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "0c7f1f3e-395c-4bbc-9c9e-a71128752b5f",
+      "name": "Mistral Chat Model - Patent Ideas",
+      "type": "@n8n/n8n-nodes-langchain.lmChatMistralCloud",
+      "typeVersion": 1,
+      "position": [
+        1904,
+        1632
+      ],
+      "credentials": {
+        "mistralCloudApi": {
+          "id": "2IK8vAKC6lOfBZgj",
+          "name": "Mistral Cloud account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "toolDescription": "Evaluates market potential of patent ideas using Google Search for market research",
+        "text": "={{ $fromAI(\"patent_ideas\", \"The candidate patent ideas to analyze\", \"string\") }}",
+        "options": {
+          "systemMessage": "You are a market analysis specialist who evaluates the commercial potential of patent ideas.\n\nYour task is to:\n1. Use Google Search Tool - Market Research to research market size, trends, and competitors\n2. For each patent idea, evaluate:\n   - Market size and growth potential\n   - Competitive landscape\n   - Target industries and customers\n   - Potential barriers to entry\n   - Revenue opportunities\n3. Rank the ideas by market potential\n4. Provide actionable insights and recommendations\n\nReturn a comprehensive market analysis with data and citations."
+        }
+      },
+      "id": "8cab0a11-d712-4ab1-8f5b-eec06d9284c3",
+      "name": "Market Analysis Tool",
+      "type": "@n8n/n8n-nodes-langchain.agentTool",
+      "typeVersion": 2.2,
+      "position": [
+        2112,
+        1424
+      ]
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "1654cacc-8ed2-4f46-873e-0c81e61d803a",
+      "name": "Mistral Chat Model - Market Analysis",
+      "type": "@n8n/n8n-nodes-langchain.lmChatMistralCloud",
+      "typeVersion": 1,
+      "position": [
+        2112,
+        1632
+      ],
+      "credentials": {
+        "mistralCloudApi": {
+          "id": "2IK8vAKC6lOfBZgj",
+          "name": "Mistral Cloud account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "toolDescription": "Drafts a comprehensive final report combining research, patent ideas, and market analysis",
+        "text": "={{ $fromAI(\"all_findings\", \"All findings from research, patent ideas, and market analysis\", \"string\") }}",
+        "options": {
+          "systemMessage": "You are a technical report writer who creates comprehensive patent innovation reports.\n\nYour task is to:\n1. Synthesize all information from research, patent ideas, and market analysis\n2. Create a well-structured report with:\n   - Executive Summary\n   - Research Findings (state-of-the-art)\n   - Patent Innovation Opportunities (ranked by potential)\n   - Market Analysis (for each opportunity)\n   - Recommendations and Next Steps\n3. Use clear, professional language\n4. Include citations and sources\n5. Format for readability\n\nReturn a complete, publication-ready report."
+        }
+      },
+      "id": "02fc29c4-a400-429b-b597-26410af1d6c4",
+      "name": "Report Writer Tool",
+      "type": "@n8n/n8n-nodes-langchain.agentTool",
+      "typeVersion": 2.2,
+      "position": [
+        2400,
+        1424
+      ]
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "88745a0e-5ffb-4c7d-8152-18d8355bc09f",
+      "name": "Mistral Chat Model - Report Writer",
+      "type": "@n8n/n8n-nodes-langchain.lmChatMistralCloud",
+      "typeVersion": 1,
+      "position": [
+        2480,
+        1632
+      ],
+      "credentials": {
+        "mistralCloudApi": {
+          "id": "2IK8vAKC6lOfBZgj",
+          "name": "Mistral Cloud account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "ae590312-68b1-4713-9b93-0b68d6b5c876",
+      "name": "Google Search Tool - Market Research",
+      "type": "@n8n/n8n-nodes-langchain.toolSerpApi",
+      "typeVersion": 1,
+      "position": [
+        2272,
+        1632
+      ],
+      "credentials": {
+        "serpApi": {
+          "id": "X84ybLWGc2vpgLND",
+          "name": "SerpAPI account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Chat Trigger": {
+      "main": [
+        [
+          {
+            "node": "Orchestrator Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Conversation Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "Orchestrator Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Mistral Chat Model - Orchestrator": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Orchestrator Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Research Agent Tool": {
+      "ai_tool": [
+        [
+          {
+            "node": "Orchestrator Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Patent Idea Generator Tool": {
+      "ai_tool": [
+        [
+          {
+            "node": "Orchestrator Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Market Analysis Tool": {
+      "ai_tool": [
+        [
+          {
+            "node": "Orchestrator Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Report Writer Tool": {
+      "ai_tool": [
+        [
+          {
+            "node": "Orchestrator Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Mistral Chat Model - Research": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Research Agent Tool",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Search Tool": {
+      "ai_tool": [
+        [
+          {
+            "node": "Research Agent Tool",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Mistral Chat Model - Patent Ideas": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Patent Idea Generator Tool",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Mistral Chat Model - Market Analysis": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Market Analysis Tool",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Mistral Chat Model - Report Writer": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Report Writer Tool",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Search Tool - Market Research": {
+      "ai_tool": [
+        [
+          {
+            "node": "Market Analysis Tool",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "0227074e-48be-4468-9d09-9d05e65e42b9",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "cc36ea94c66b218b1004875801eaf874e455bd7626a2c54ede996e4ede705d8f"
+  },
+  "id": "hbz6XKHUzhyBgFQz",
+  "tags": []
+}
