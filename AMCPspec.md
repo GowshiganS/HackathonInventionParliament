@@ -1,5 +1,9 @@
 AMCP: Asynchronous Model Context Protocol Specification v0.1
+
+Wilfred Doré and Gowshigan Selladurai
+
 This document outlines the specification for the Asynchronous Model Context Protocol (AMCP), a system designed to enable massively parallel, asynchronous collaboration between AI agents.
+
 1. Overview
 AMCP is a protocol for multi-agent systems that facilitates large-scale, dynamic collaboration without the need for direct, sequential communication. It replaces traditional turn-based interaction with a shared, semantically searchable context, allowing agents to operate in parallel and form emergent coalitions. This design overcomes the scalability limitations of existing multi-agent frameworks.
 Core Principles:
