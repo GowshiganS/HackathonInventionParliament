@@ -77,6 +77,7 @@ Patent attorney searches 120k prior art patents, identifies novel elements, gene
 - **Google Cloud**: Parallel agent execution
 - **Lovable**: Real-time debate visualization : https://invention-parliament.lovable.app
 - **Custom AMCP SDK**: Python library for protocol
+<img width="2030" height="740" alt="image" src="https://github.com/user-attachments/assets/be8f1810-c72e-4292-8dd4-b06678e25b39" />
 
 ---
 
