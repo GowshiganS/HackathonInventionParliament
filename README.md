@@ -1,6 +1,14 @@
 # 🏛️ The Invention Parliament and the AMCP protocol
 Wilfred Doré and Gowshigan Selladurai
 
+Tools used:
+N8n: orchestration
+Mistral: AI models
+Qdrant: vector database (in progress)
+Google Cloud: Google AI studio
+Fal: planned for diagram generation
+UI: Lovable + ElevenLabs (planned for voice interaction)
+
 ## **10 AI Agents Invent Patents in 1 Hour via Async Protocol**
 
 ---
