@@ -66,7 +66,7 @@ Patent attorney searches 120k prior art patents, identifies novel elements, gene
 - **Qdrant**: AMCP backbone (message broadcast + 120k patent DB)
 - **n8n**: Async workflow orchestration
 - **Google Cloud**: Parallel agent execution
-- **Lovable**: Real-time debate visualization
+- **Lovable**: Real-time debate visualization : https://invention-parliament.lovable.app
 - **Custom AMCP SDK**: Python library for protocol
 
 ---
